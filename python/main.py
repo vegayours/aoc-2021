@@ -2,8 +2,9 @@ from argparse import ArgumentParser
 from os import path
 
 import aoc_1
+import aoc_2
 
-SOLUTIONS = {"1": aoc_1.solution()}
+SOLUTIONS = {"1": aoc_1.solution(), "2": aoc_2.solution()}
 
 
 def read_input(input_dir, mod):
