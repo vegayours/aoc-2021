@@ -3,8 +3,9 @@ from os import path
 
 import aoc_1
 import aoc_2
+import aoc_3
 
-SOLUTIONS = {"1": aoc_1.solution(), "2": aoc_2.solution()}
+SOLUTIONS = {"1": aoc_1.solution(), "2": aoc_2.solution(), "3": aoc_3.solution()}
 
 
 def read_input(input_dir, mod):
