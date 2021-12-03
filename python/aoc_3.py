@@ -1,14 +1,13 @@
-def count_bits_in_pos(lines, pos):
-    return sum(map(lambda l: l[pos] == "1", lines))
+from collections import Counter
 
 
 def solve_1(lines):
     n_pos = len(lines[0])
-    cnt = [count_bits_in_pos(lines, pos) for pos in range(n_pos)]
     gamma_rate = ""
     epsilon_rate = ""
     for i in range(n_pos):
-        if cnt[i] * 2 > len(lines):
+        cnt = Counter(l[i] for l in lines)
+        if cnt["1"] > cnt["0"]:
             gamma_rate += "1"
             epsilon_rate += "0"
         else:
@@ -26,9 +25,9 @@ def find_rating(lines, inverse):
         if n_candidates == 1:
             break
 
-        pos_count = count_bits_in_pos(candidates, i)
+        cnt = Counter(l[i] for l in candidates)
 
-        if pos_count >= (n_candidates - pos_count):
+        if cnt["1"] >= cnt["0"]:
             target = True
         else:
             target = False
