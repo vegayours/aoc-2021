@@ -4,8 +4,14 @@ from os import path
 import aoc_1
 import aoc_2
 import aoc_3
+import aoc_4
 
-SOLUTIONS = {"1": aoc_1.solution(), "2": aoc_2.solution(), "3": aoc_3.solution()}
+SOLUTIONS = {
+    "1": aoc_1.solution(),
+    "2": aoc_2.solution(),
+    "3": aoc_3.solution(),
+    "4": aoc_4.solution(),
+}
 
 
 def read_input(input_dir, mod):
@@ -15,7 +21,9 @@ def read_input(input_dir, mod):
 
 def read_file(filename):
     with open(filename, "r") as f:
-        lines = [line for line in f.read().split("\n") if line]
+        lines = [line for line in f.read().split("\n")]
+        if not lines[-1]:
+            lines.pop()
     return lines
 
 
@@ -29,6 +37,14 @@ def get_solve_fn(mod, part):
 
 
 def main(args):
+    if not args.tasks:
+        for day, day_solver in SOLUTIONS.items():
+            input = read_input(args.input_dir, day)
+            for part, solve_fn in day_solver.items():
+                result = solve_fn(input)
+                print("Task: {}_{}, solution: {}".format(day, part, result))
+        return
+
     for task in args.tasks:
         mod, part = task.split("_")
         solve_fn = get_solve_fn(mod, part)
