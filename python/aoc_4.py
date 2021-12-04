@@ -75,7 +75,18 @@ def solve_1(lines: List[str]) -> int:
 
 
 def solve_2(lines):
-    pass
+    nums, boards = read_input(lines)
+    playing_boards = boards
+    for num in nums:
+        next_boards = []
+        for board in playing_boards:
+            board.add_number(num)
+            if not board.is_complete():
+                next_boards.append(board)
+            elif len(playing_boards) == 1:
+                return playing_boards[0].score() * num
+        playing_boards = next_boards
+    raise Exception("Problem has no solution")
 
 
 def solution():
