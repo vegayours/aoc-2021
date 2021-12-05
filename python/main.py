@@ -5,12 +5,14 @@ import aoc_1
 import aoc_2
 import aoc_3
 import aoc_4
+import aoc_5
 
 SOLUTIONS = {
     "1": aoc_1.solution(),
     "2": aoc_2.solution(),
     "3": aoc_3.solution(),
     "4": aoc_4.solution(),
+    "5": aoc_5.solution(),
 }
 
 
@@ -45,7 +47,7 @@ def main(args):
                 print("Task: {}_{}, solution: {}".format(day, part, result))
         return
 
-    for task in args.tasks:
+    for task in args.tasks[0]:
         mod, part = task.split("_")
         solve_fn = get_solve_fn(mod, part)
         input = read_input(args.input_dir, mod)
@@ -57,10 +59,10 @@ if __name__ == "__main__":
     parser = ArgumentParser(description="Advent of Code 2021 solutions.")
     parser.add_argument(
         "--tasks",
-        type=str,
         nargs="+",
-        action="extend",
-        help="Tasks to execute, e.g. 1_1, 1_2, 3_1, etc.",
+        type=str,
+        action="append",
+        help="Tasks to execute, e.g. --tasks 1_1 1_2  3_1 etc.",
     )
     parser.add_argument(
         "--input-dir",
