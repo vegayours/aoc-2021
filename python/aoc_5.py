@@ -1,14 +1,17 @@
 from dataclasses import dataclass
-from typing import List
+from typing import List, Set
+from collections import Counter
+
+# from functools import cached_property
 
 
-@dataclass
+@dataclass(frozen=True)
 class Point:
     x: int
     y: int
 
 
-@dataclass
+@dataclass(frozen=True)
 class Line:
     start: Point
     end: Point
@@ -25,44 +28,31 @@ def parse_lines(input: List[str]) -> List[Line]:
     return list(map(parse_line, input))
 
 
-def points_iter(lines: List[Line]):
-    for line in lines:
-        yield line.start
-        yield line.end
+def coord_delta(first: int, second: int) -> int:
+    if first == second:
+        return 0
+    elif first < second:
+        return 1
+    else:
+        return -1
 
 
-def point_in_line(point: Point, line: Line) -> bool:
-    if point.x == line.start.x and point.x == line.end.x:
-        return min(line.start.y, line.end.y) <= point.y <= max(line.start.y, line.end.y)
-    if point.y == line.start.y and point.y == line.end.y:
-        return min(line.start.x, line.end.x) <= point.x <= max(line.start.x, line.end.x)
-    return (
-        abs(point.x - line.start.x) == abs(point.y - line.start.y)
-        and min(line.start.y, line.end.y) <= point.y <= max(line.start.y, line.end.y)
-        and min(line.start.x, line.end.x) <= point.x <= max(line.start.x, line.end.x)
-    )
+def line_points(line: Line):
+    dx = coord_delta(line.start.x, line.end.x)
+    dy = coord_delta(line.start.y, line.end.y)
+
+    steps = max(abs(line.start.x - line.end.x), abs(line.start.y - line.end.y))
+
+    point = line.start
+    for _ in range(steps):
+        yield point
+        point = Point(point.x + dx, point.y + dy)
+    yield point
 
 
-# Absolute naive brutforce point in the line checking.
 def solve(lines: List[Line]) -> int:
-    x_min = min(map(lambda p: p.x, points_iter(lines)))
-    x_max = max(map(lambda p: p.x, points_iter(lines)))
-    y_min = min(map(lambda p: p.y, points_iter(lines)))
-    y_max = max(map(lambda p: p.y, points_iter(lines)))
-
-    total = 0
-    for x in range(x_min, x_max + 1):
-        for y in range(y_min, y_max + 1):
-            point = Point(x, y)
-            has_line = False
-            for line in lines:
-                if point_in_line(point, line):
-                    if has_line:
-                        total += 1
-                        break
-                    has_line = True
-
-    return total
+    count = Counter(p for l in lines for p in line_points(l))
+    return sum(x > 1 for x in count.values())
 
 
 def solve_1(input: List[str]):
