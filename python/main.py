@@ -11,6 +11,7 @@ import aoc_7
 import aoc_8
 import aoc_9
 import aoc_10
+import aoc_11
 
 SOLUTIONS = {
     "1": aoc_1.solution(),
@@ -23,6 +24,7 @@ SOLUTIONS = {
     "8": aoc_8.solution(),
     "9": aoc_9.solution(),
     "10": aoc_10.solution(),
+    "11": aoc_11.solution(),
 }
 
 
@@ -33,10 +35,7 @@ def read_input(input_dir, mod):
 
 def read_file(filename):
     with open(filename, "r") as f:
-        lines = [line for line in f.read().split("\n")]
-        if not lines[-1]:
-            lines.pop()
-    return lines
+        return [l.rstrip("\n") for l in f.readlines()]
 
 
 def get_solve_fn(mod, part):
