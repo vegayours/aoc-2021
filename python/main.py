@@ -12,6 +12,7 @@ import aoc_8
 import aoc_9
 import aoc_10
 import aoc_11
+import aoc_12
 
 SOLUTIONS = {
     "1": aoc_1.solution(),
@@ -25,6 +26,7 @@ SOLUTIONS = {
     "9": aoc_9.solution(),
     "10": aoc_10.solution(),
     "11": aoc_11.solution(),
+    "12": aoc_12.solution(),
 }
 
 
