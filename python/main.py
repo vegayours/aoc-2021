@@ -1,44 +1,12 @@
 from argparse import ArgumentParser
 from os import path
+from importlib import import_module
 
-import aoc_1
-import aoc_2
-import aoc_3
-import aoc_4
-import aoc_5
-import aoc_6
-import aoc_7
-import aoc_8
-import aoc_9
-import aoc_10
-import aoc_11
-import aoc_12
-import aoc_13
-import aoc_14
-import aoc_15
-import aoc_16
-import aoc_17
-import aoc_18
+MAX_DAY = 20
 
 SOLUTIONS = {
-    "1": aoc_1.solution(),
-    "2": aoc_2.solution(),
-    "3": aoc_3.solution(),
-    "4": aoc_4.solution(),
-    "5": aoc_5.solution(),
-    "6": aoc_6.solution(),
-    "7": aoc_7.solution(),
-    "8": aoc_8.solution(),
-    "9": aoc_9.solution(),
-    "10": aoc_10.solution(),
-    "11": aoc_11.solution(),
-    "12": aoc_12.solution(),
-    "13": aoc_13.solution(),
-    "14": aoc_14.solution(),
-    "15": aoc_15.solution(),
-    "16": aoc_16.solution(),
-    "17": aoc_17.solution(),
-    "18": aoc_18.solution(),
+    str(day): import_module("aoc_{}".format(day)).solution()
+    for day in range(1, MAX_DAY + 1)
 }
 
 
@@ -85,7 +53,7 @@ if __name__ == "__main__":
         nargs="+",
         type=str,
         action="append",
-        help="Tasks to execute, e.g. --tasks 1_1 1_2  3_1 etc.",
+        help="Tasks to execute, e.g. --tasks 1_1 1_2 3_1 etc.",
     )
     parser.add_argument(
         "--input-dir",
