@@ -2,7 +2,7 @@ from argparse import ArgumentParser
 from os import path
 from importlib import import_module
 
-MAX_DAY = 21
+MAX_DAY = 22
 
 SOLUTIONS = {
     str(day): import_module("aoc_{}".format(day)).solution()
